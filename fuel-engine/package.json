@@ -1,0 +1,11 @@
+{
+  "name": "fuel-engine",
+  "version": "1.0.0",
+  "description": "Default implementation of the FUEL package runner",
+  "main": "fuel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Steele",
+  "license": "MIT"
+}

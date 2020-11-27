@@ -1,0 +1,11 @@
+{
+  "name": "fuel-packager",
+  "version": "1.0.0",
+  "description": "Default FUEL package builder/validator",
+  "main": "fuel-packager.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Steele",
+  "license": "MIT"
+}
