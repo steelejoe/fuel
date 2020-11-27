@@ -18,7 +18,7 @@ A FUEL compliant engine implementation will include:
 
 - Javascript engine (e.g. node)
 - user interface engine (e.g. browser)
-- package extractor (e.g. defaultEngine/fuel.js)
+- package runner (e.g. fuel-engine/fuel.js)
 
 These can be integrated into a single executable or exist separately.
 
