@@ -1,0 +1,7 @@
+{
+    "name": "service0",
+    "description": "A super useful service",
+    "version": "1.0",
+    "entryPoint": "server.js",
+    "visibility": "private"
+}

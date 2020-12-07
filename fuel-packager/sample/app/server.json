@@ -1,0 +1,7 @@
+{
+    "name": "app",
+    "description": "A sample application",
+    "version": "1.0",
+    "entryPoint": "app.js",
+    "visibility": "public"
+}
