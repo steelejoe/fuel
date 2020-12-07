@@ -35,3 +35,9 @@ These operations may be done in parallel and lazily to the extent possible
    4. The server is started on the chosen port.
    5. The URL for the server is written to the console
    6. The server responds to requests on the chosen port until being stopped.
+
+
+## Service launching
+
+Services are launched with the port assigned in the manifest, or if one is not provided with a random port in the range TBD. If the "visibility" of the server is marked as "private" the URL for talking to the server is not echoed to the std output. 
+***In this case it can be retrieved by other services launched from the same package using the "service" API.***

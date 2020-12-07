@@ -1,0 +1,5 @@
+{
+    "packageName": "Minimal Package",
+    "packageVersion": "1.0",
+    "packageServices": ["app"]
+}

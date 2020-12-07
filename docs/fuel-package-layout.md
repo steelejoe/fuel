@@ -5,8 +5,10 @@ The default compression method supported is **DEFLATE** although I plan to inclu
 
 The minimum required layout looks like this.
 
-**ROOT**
+package-root
+
 - manifest.json
 - signature.json
-- { server-name }
-- apps
+- server
+  - server.json
+  - index.html

@@ -1,15 +1,17 @@
 {
-  "name": "fuel-packager",
-  "version": "1.0.0",
-  "description": "Default FUEL package builder/validator",
-  "main": "fuel-packager.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Joe Steele",
-  "license": "MIT",
-  "dependencies": {
-    "argparse": "^2.0.1",
-    "unzip": "^0.1.11"
-  }
+    "name": "fuel-packager",
+    "version": "1.0.0",
+    "description": "Default FUEL package builder/validator",
+    "main": "fuel-packager.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Joe Steele",
+    "license": "MIT",
+    "dependencies": {
+        "argparse": "^2.0.1",
+        "fs": "^0.0.1-security",
+        "tmp": "^0.2.1",
+        "unzipper": "^0.10.11"
+    }
 }

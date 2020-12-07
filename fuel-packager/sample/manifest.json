@@ -1,6 +1,0 @@
-{
-    "version": "1.0",
-    "name": "Sample Package",
-    "description": "A sample package used for validating the packaging tool",
-    "services": ["app", "service0"]
-}
