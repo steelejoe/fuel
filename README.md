@@ -24,12 +24,12 @@ These can be integrated into a single executable or exist separately.
 
 These behaviors are required for a compliant FUEL implementation.
 
-- Support package extraction as described in [FUEL Package Layout](../blob/main/fuel-package-layout.md)
-- Support package verification as described in [FUEL Package Signature](../blob/main/fuel-package-signature.md)
-- Support all manifest fields described in [FUEL Package Manifest](../blob/main/fuel-package-manifest.md)
-- Support the service interface described in [FUEL Service Interface](../blob/main/fuel-service-interface.md)
-- Support the application interface described in [FUEL Application Interface](../blob/main/fuel-application-interface.md)
-- Support the order of operations described in [FUEL Operation](../blob/main/fuel-operation.md)
+- Support package extraction as described in [FUEL Package Layout](./docs/fuel-package-layout.md)
+- Support package verification as described in [FUEL Package Signature](./docs/fuel-package-signature.md)
+- Support all manifest fields described in [FUEL Package Manifest](./docs/fuel-package-manifest.md)
+- Support the service interface described in [FUEL Service Interface](./docs/fuel-service-interface.md)
+- Support the application interface described in [FUEL Application Interface](./docs/main/fuel-application-interface.md)
+- Support the order of operations described in [FUEL Operation](./docs/fuel-operation.md)
 
 ### Optional support
 
