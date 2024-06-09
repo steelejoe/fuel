@@ -7,7 +7,8 @@ const express = require('express');
 function loadConfiguration() {
     // load the configuration from persistent storage
     return {
-        installed: { foobar: '/path/to/package' }
+        installed: { foobar: '/path/to/package' },
+        debugging: true
     }
 }
 

@@ -4,9 +4,12 @@
  * FUEL default engine
  */
 
-const { ArgumentParser } = require('argparse'),
+const { ArgumentParser } = require('argparse'), { version } = require('./package.json'),
     configurator = require('./configurator'),
-    FuelPackage = require('./fuelPackage'), { version } = require('./package.json');
+    FuelApp = require('../common/fuelApp'),
+    FuelPackage = require('../common/fuelPackage'),
+    log = require('../common/log'),
+    tmp = require('tmp');
 
 const parser = new ArgumentParser({
     description: 'fuel - default FUEL package runner'
@@ -40,39 +43,72 @@ parser.add_argument('path', {
 const args = parser.parse_args();
 
 if (args.config && (args.path || args.install || args.run || args.find)) {
-    console.log('Info: --config is a standalone option. All other params ignored');
+    log.info('--config is a standalone option. All other params ignored');
 } else if (args.path && !args.find && (!args.install && !args.run)) {
-    console.error('Error: --install, --run or --find must be specified');
+    log.error('--install, --run or --find must be specified');
     process.exit(-1);
 } else if (args.find && !args.path) {
-    console.error('Error: Package name must be specified with --find');
+    log.error('Package name must be specified with --find');
+    process.exit(-1);
+} else if (!args.path.endsWith('.fuel') && (args.install || args.run)) {
+    log.error('Only packages can be specified with --install or --run');
     process.exit(-1);
 } else if (args.find && args.install) {
-    console.error('Error: --install must not be specified with --find');
+    log.error('--install must not be specified with --find');
     process.exit(-1);
 }
 
+// setup a temporary folder for unzipping packages which are not being installed
+const tmpDir = tmp.dirSync({ unsafeCleanup: true });
+tmp.setGracefulCleanup();
+
 let config = configurator.loadConfiguration(),
-    server, package, path;
+    server;
+
+if (!config) {
+    log.error('Unable to load configuration');
+    process.exit(-1);
+}
+if (config.debugging) {
+    log.enable('debug');
+}
+log.enable('info');
+
+function launchApp(app) {
+    if (app && app.isLayoutValid() && (!app.isSigned() || app.isSignatureValid())) {
+        return app.launch(config, (err) => {
+            if (err) {
+                log.error(`app exited with error ${err}`);
+            }
+            process.exit(err ? -1 : 0);
+        });
+    }
+}
 
 if (args.config) {
-    // TODO how do we exit?
-    server = configurator.launch(config, (err) => {
-        if (err) {
-            console.error(`Error: server failed to launch with error ${err}`);
-        }
-        process.exit(err ? -1 : 0);
-    });
+    server = launchApp(configurator.path);
 } else {
-    path = args.find ? config.installed[args.path] : args.path;
-    console.log(`Package: ${path}`);
-    if (args.install || args.run) {
-        package = new FuelPackage(path, args.install, configuration.cacheDir);
-        package.open()
-            .then(() => {
+    if (args.find) {
+        const appPath = config.installed[args.path];
+        log.info(`Found installed package at ${appPath}`);
+        if (args.run) {
+            server = launchApp(new FuelApp(appPath));
+        }
+    } else if (args.install || args.run) {
+        const packagePath = args.path;
+        log.info(`Opening package from ${packagePath}`);
+        let appName = packagePath.slice(path.lastIndexOf('/'));
+        appName = appName.slice(0, appName.length - '.fuel'.length);
+        let appPath = args.install ? config.cacheDir : tmpDir.name;
+        appPath += '/' + appName;
+        const package = new FuelPackage();
+        package.open(packagePath, appPath)
+            .then((app) => {
                 if (args.run) {
-                    server = package.launch(); // TODO do we want to pass any config?
+                    server = launchApp(app);
+                } else {
+                    log.info(`Installed package at ${appPath}`);
                 }
-            })
+            });
     }
 }

@@ -5,9 +5,23 @@ This is the required order of operations when running a FUEL package.
 # 1. Package extraction and validation
 There are two options for handling this - immediate and lazy. The immediate option is easier to implement but more costly if the validation fails.
 
+```mermaid
+graph TD;
+    engine-->openPackage;
+    openPackage-->validatePackageContents;
+    openPackage-->openPackageFailure;
+    validatePackageContents-->validationFailure;
+    validatePackageContents-->validatePackageSignature;
+    validatePackageSignature-->validationFailure;
+    validatePackageSignature-->installPackage;
+    validatePackageSignature-->runPackage;
+    installPackage-->runPackage;
+```
+
 ## Immediate
 
 - Extract the [package](fuel-package-layout.md) fully to disk
+- Validate the layout of the extracted package
 - Validate the [signature](fuel-package-signature.md) for all files in the extracted package
 - If validation succeeded, proceed with the next step.
 
@@ -39,5 +53,4 @@ These operations may be done in parallel and lazily to the extent possible
 
 ## Service launching
 
-Services are launched with the port assigned in the manifest, or if one is not provided with a random port in the range TBD. If the "visibility" of the server is marked as "private" the URL for talking to the server is not echoed to the std output. 
-***In this case it can be retrieved by other services launched from the same package using the "service" API.***
+Services are launched with the port assigned in the manifest, or if one is not provided with a random port in the range TBD. If the "visibility" of the server is marked as "private" the URL for talking to the server is not echoed to the std output. ***In this case it can be retrieved by other services launched from the same package using the "service" API.***
